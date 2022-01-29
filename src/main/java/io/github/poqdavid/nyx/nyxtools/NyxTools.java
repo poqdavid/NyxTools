@@ -24,7 +24,7 @@ import com.google.inject.Inject;
 import io.github.poqdavid.nyx.nyxcore.NyxCore;
 import io.github.poqdavid.nyx.nyxcore.Utils.CText;
 import io.github.poqdavid.nyx.nyxcore.Utils.NCLogger;
-import io.github.poqdavid.nyx.nyxcore.Utils.Setting.NyxTools.Settings;
+import io.github.poqdavid.nyx.nyxcore.Utils.Setting.NyxTools.NTSettings;
 import io.github.poqdavid.nyx.nyxtools.Commands.CommandManager;
 import org.bstats.sponge.Metrics;
 import org.slf4j.Logger;
@@ -49,19 +49,17 @@ import javax.annotation.Nullable;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
-@Plugin(id = PluginData.id, name = PluginData.name, version = PluginData.version, description = PluginData.description, url = PluginData.url, authors = {PluginData.author1}, dependencies = {@Dependency(id = "nyxcore", version = "1.1", optional = false)})
+@Plugin(id = "nyxtools", name = "@name@", version = "@version@", description = "@description@", url = "https://github.com/poqdavid/NyxTools", authors = {"@authors@"}, dependencies = {@Dependency(id = "nyxcore", version = "1.5", optional = false)})
 public class NyxTools {
 
     private static NyxTools nyxtools;
     private final Metrics metrics;
     private final NCLogger logger;
     private final Path configFullPath;
-    private final Path dataDir;
     private final PluginContainer pluginContainer;
     public PermissionService permService;
     public PermissionDescription.Builder permDescBuilder;
-    public Path recordsDir;
+
     private Path configDirPath;
     @Inject
     private Game game;
@@ -70,13 +68,13 @@ public class NyxTools {
     @Inject
     public NyxTools(Metrics.Factory metricsFactory, @ConfigDir(sharedRoot = true) Path path, Logger logger, PluginContainer container) {
         nyxtools = this;
-        this.dataDir = Sponge.getGame().getSavesDirectory().resolve(PluginData.id);
+
         this.pluginContainer = container;
         this.logger = NyxCore.getInstance().getLogger(CText.get(CText.Colors.BLUE, 1, "Nyx") + CText.get(CText.Colors.MAGENTA, 0, "Tools"));
         this.configFullPath = Paths.get(NyxCore.getInstance().getToolsPath().toString(), "config.json");
 
         this.logger.info(" ");
-        this.logger.info(CText.get(CText.Colors.MAGENTA, 0, "NyxTools") + CText.get(CText.Colors.YELLOW, 0, " v" + io.github.poqdavid.nyx.nyxtools.PluginData.version));
+        this.logger.info(CText.get(CText.Colors.MAGENTA, 0, "@name@") + CText.get(CText.Colors.YELLOW, 0, " v" + this.getVersion()));
         this.logger.info("Starting...");
         this.logger.info(" ");
 
@@ -102,7 +100,11 @@ public class NyxTools {
 
     @Nonnull
     public String getVersion() {
-        return PluginData.version;
+        if (this.getPluginContainer().getVersion().isPresent()) {
+            return this.getPluginContainer().getVersion().get();
+        } else {
+            return "@version@";
+        }
     }
 
     @Nonnull
@@ -121,14 +123,14 @@ public class NyxTools {
     }
 
     @Nonnull
-    public Settings getSettings() {
+    public NTSettings getSettings() {
         return NyxCore.getInstance().getToolsSettings();
     }
 
     @Listener
     public void onGamePreInit(@Nullable final GamePreInitializationEvent event) {
         this.logger.info(" ");
-        this.logger.info(CText.get(CText.Colors.MAGENTA, 0, "NyxTools") + CText.get(CText.Colors.YELLOW, 0, " v" + io.github.poqdavid.nyx.nyxtools.PluginData.version));
+        this.logger.info(CText.get(CText.Colors.MAGENTA, 0, "@name@") + CText.get(CText.Colors.YELLOW, 0, " v" + this.getVersion()));
         this.logger.info("Initializing...");
         this.logger.info(" ");
         nyxtools = this;

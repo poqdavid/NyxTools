@@ -37,7 +37,6 @@ import org.spongepowered.api.text.format.TextStyles;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-
 public class HelpCMD implements CommandExecutor {
     private final NyxTools nyt;
 
@@ -81,7 +80,6 @@ public class HelpCMD implements CommandExecutor {
 
         return CommandResult.success();
     }
-
 }
 
 

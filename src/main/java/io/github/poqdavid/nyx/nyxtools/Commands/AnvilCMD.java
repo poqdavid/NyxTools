@@ -22,7 +22,7 @@ package io.github.poqdavid.nyx.nyxtools.Commands;
 
 import io.github.poqdavid.nyx.nyxcore.Permissions.ToolsPermission;
 import io.github.poqdavid.nyx.nyxcore.Utils.Invs;
-import io.github.poqdavid.nyx.nyxcore.Utils.Tools;
+import io.github.poqdavid.nyx.nyxcore.Utils.CoreTools;
 import io.github.poqdavid.nyx.nyxtools.Utils.Containers.VirtualAnvil;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandPermissionException;
@@ -53,7 +53,7 @@ public class AnvilCMD implements CommandExecutor {
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
         if (src instanceof Player) {
             if (src.hasPermission(ToolsPermission.COMMAND_ANVIL)) {
-                final VirtualAnvil VA = new VirtualAnvil(Tools.getPlayerE(src));
+                final VirtualAnvil VA = new VirtualAnvil(CoreTools.getPlayerE(src));
                 return inv.Open(src, VA, "minecraft:anvil", "Virtual Anvil");
             } else {
                 throw new CommandPermissionException(Text.of("You don't have permission to use this command."));

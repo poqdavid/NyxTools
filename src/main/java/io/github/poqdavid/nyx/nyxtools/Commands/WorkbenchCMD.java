@@ -22,7 +22,7 @@ package io.github.poqdavid.nyx.nyxtools.Commands;
 
 import io.github.poqdavid.nyx.nyxcore.Permissions.ToolsPermission;
 import io.github.poqdavid.nyx.nyxcore.Utils.Invs;
-import io.github.poqdavid.nyx.nyxcore.Utils.Tools;
+import io.github.poqdavid.nyx.nyxcore.Utils.CoreTools;
 import io.github.poqdavid.nyx.nyxtools.Utils.Containers.VirtualWorkbench;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandPermissionException;
@@ -52,7 +52,7 @@ public class WorkbenchCMD implements CommandExecutor {
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
         if (src instanceof Player) {
             if (src.hasPermission(ToolsPermission.COMMAND_WORKBENCH)) {
-                return inv.Open(src, new VirtualWorkbench(Tools.getPlayerE(src)), "minecraft:crafting_table", "Workbench");
+                return inv.Open(src, new VirtualWorkbench(CoreTools.getPlayerE(src)), "minecraft:crafting_table", "Workbench");
             } else {
                 throw new CommandPermissionException(Text.of("You don't have permission to use this command."));
             }

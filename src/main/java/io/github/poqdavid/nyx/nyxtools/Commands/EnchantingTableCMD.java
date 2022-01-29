@@ -22,7 +22,7 @@ package io.github.poqdavid.nyx.nyxtools.Commands;
 
 import io.github.poqdavid.nyx.nyxcore.Permissions.ToolsPermission;
 import io.github.poqdavid.nyx.nyxcore.Utils.Invs;
-import io.github.poqdavid.nyx.nyxcore.Utils.Tools;
+import io.github.poqdavid.nyx.nyxcore.Utils.CoreTools;
 import io.github.poqdavid.nyx.nyxtools.Utils.Containers.VirtualEnchantingTable;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandPermissionException;
@@ -52,13 +52,13 @@ public class EnchantingTableCMD implements CommandExecutor {
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
         if (src instanceof Player) {
             if (src.hasPermission(ToolsPermission.COMMAND_ENCHANTINGTABLE)) {
-                final Integer maxPower = this.getEnchantingTablePower(Tools.getPlayer(src));
+                final Integer maxPower = this.getEnchantingTablePower(CoreTools.getPlayer(src));
                 final Integer et_lvl = args.<Integer>getOne("power").orElse(maxPower);
                 VirtualEnchantingTable VET;
                 if (et_lvl >= maxPower) {
-                    VET = new VirtualEnchantingTable(Tools.getPlayerE(src), maxPower.floatValue());
+                    VET = new VirtualEnchantingTable(CoreTools.getPlayerE(src), maxPower.floatValue());
                 } else {
-                    VET = new VirtualEnchantingTable(Tools.getPlayerE(src), et_lvl.floatValue());
+                    VET = new VirtualEnchantingTable(CoreTools.getPlayerE(src), et_lvl.floatValue());
                 }
                 return inv.Open(src, VET, "minecraft:enchanting_table", "Enchant");
             } else {
